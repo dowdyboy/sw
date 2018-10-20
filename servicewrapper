@@ -1,0 +1,50 @@
+#!/bin/bash
+
+basepath=$(cd `dirname $0`; pwd)
+
+if [ $# == 0 ];then
+	echo "Error. The Arguments Count is : 0"
+else
+	isTypeArgument=1
+	otherArgumentsString=''
+	for i in $@
+	do
+		if [ $isTypeArgument == 1 ];then
+			isTypeArgument=0
+		else
+			otherArgumentsString=$otherArgumentsString" "$i
+		fi
+	done
+	case $1 in 
+		"start")
+			if [ -f $basepath/sw-start-pre ] && [ -x $basepath/sw-start-pre ];then
+				$basepath/sw-start-pre
+			fi
+			$basepath/sw-start $otherArgumentsString  > $basepath/log/sw-start.log 
+			if [ -f $basepath/sw-start-post ] && [ -x $basepath/sw-start-post ];then
+                                $basepath/sw-start-post
+                        fi
+		;;
+		"restart")
+			if [ -f $basepath/sw-restart-pre ] && [ -x $basepath/sw-restart-pre ];then
+                                $basepath/sw-restart-pre
+                        fi
+			$basepath/sw-restart $otherArgumentsString > $basepath/log/sw-restart.log 
+			if [ -f $basepath/sw-restart-post ] && [ -x $basepath/sw-restart-post ];then
+                                $basepath/sw-restart-post
+                        fi
+		;;
+		"stop")
+			if [ -f $basepath/sw-stop-pre ] && [ -x $basepath/sw-stop-pre ];then
+                                $basepath/sw-stop-pre
+                        fi
+			$basepath/sw-stop $otherArgumentsString > $basepath/log/sw-stop.log 
+			if [ -f $basepath/sw-stop-post ] && [ -x $basepath/sw-stop-post ];then
+                                $basepath/sw-stop-post
+                        fi
+		;;
+		*)
+			echo "Error. The Type Argument Is Not Valid"
+		;;
+	esac
+fi

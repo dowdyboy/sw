@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# You Can Write Your Own Start Cmd Here And You Can Access Arguments By $x $# $* $@ Etc.
+# You Have To Write Your Cmd Using Background Mode , eg : /bin/frps $* &
+
+basepath=$(cd `dirname $0`; pwd)
+
+cmd=`cat $basepath/cmd`
+cmd=$cmd" "$*
+sign=`cat $basepath/sign`
+
+$cmd &
+
+#loopCnt=0
+#maxLoopCnt=100
+#cnt=`ps aux | grep "$sign" | wc -l`
+#while [ $cnt -eq 1 ] && [ $loopCnt -lt $maxLoopCnt ]
+#do
+#	loopCnt=`expr $loopCnt + 1`
+#	cnt=`ps aux | grep "$sign" | wc -l`
+#	sleep 1
+#done
+
+#basepath=$(cd `dirname $0`; pwd)
+
+#i=1
+#while [ $i -le $cnt ]
+#do
+#	echo `ps aux | grep "$sign" | head -n $i | tail -1` >> line
+#	if [ `ps aux | grep "$sign" | head -n $i | tail -1 | grep "grep"` -eq ''  ];then
+#		pid=`ps aux | grep "$sign" | head -n $i | tail -1 | awk '{print $2}'`
+#               echo $pid > $basepath/pid
+#		break
+#	fi
+#	i=`expr $i + 1`
+#done
+
+#sleep 60
+
+#pid=`ps aux | grep "$sign" | head -1 | tail -1 | awk '{print $2}'`
+#echo $pid > $basepath/pid

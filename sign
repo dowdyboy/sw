@@ -1,0 +1,1 @@
+/usr/local/frp/frps

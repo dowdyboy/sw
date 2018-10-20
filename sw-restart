@@ -1,0 +1,7 @@
+#!/bin/bash
+
+basepath=$(cd `dirname $0`; pwd)
+
+$basepath/servicewrapper stop $*
+sleep 2
+$basepath/servicewrapper start $*
